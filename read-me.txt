@@ -1,0 +1,18 @@
+Assumptions:
+ 1. To make rate limiter more generic, easy to enhance and add more rate limiter API to check for threshold. 
+    Rate Limiter API is not designed for multithreading environment. 
+    Because this can be easily handled while new class is implementing RateLimiter interface. We just need to call 
+    validate() method from a synchronized block.
+ 2. No DB has been used, all are in memory.
+ 3. No REST or SOAP, can be tested using Junit test cases provided. However calling validate() method from any API will do the same.
+ 4. RateLimitar granularity is minute level.
+ 5. Sliding window approach / algorithm is used. So it will validate for current time to window size (current time in minute - window size).
+ 
+ 
+Approach:
+  1. Enum has not been used to support SOLID principles. Its more plug n play design.
+  2. RateLimiter interface implementer can pass threshold, window for each API while calling validate() method. 
+     Else default value is given as class level for all API.
+  3. Constant class has not been created so that RateLimiter interface implementing class has more flexibility and because of this it makes 
+     design more cohesive and loose coupled.
+ 
